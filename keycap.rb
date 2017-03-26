@@ -1,13 +1,13 @@
 class Keycap < React::Component::Base
   before_mount do
-    state.key! 'A'
+    state.key 'A'
     state.edit! false
 
-    state.selected! false
+    state.selected false
   end
 
   def show_value val
-    state.key! val
+    state.key val
   end
 
   def show_popup val
@@ -15,7 +15,7 @@ class Keycap < React::Component::Base
   end
 
   def toggle_select
-    state.selected! !state.selected
+    state.selected !state.selected
   end
 
   def selected

@@ -5,7 +5,7 @@ class KeyValue < React::Component::Base
   param :show
 
   before_mount do
-    state.value! 'A'
+    state.value 'A'
 
     @dictionary = Dictionary.instance
   end
@@ -30,7 +30,7 @@ class KeyValue < React::Component::Base
             option(value: v){k}
           end
         end.on :change do |e|
-          state.value! @dictionary.kc_map[e.target.value]
+          state.value @dictionary.kc_map[e.target.value]
         end
 
         input(type: 'submit', value: 'Acept')

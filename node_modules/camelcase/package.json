@@ -16,7 +16,6 @@
   "_from": "camelcase@>=2.0.0 <3.0.0",
   "_id": "camelcase@2.1.1",
   "_inCache": true,
-  "_installable": true,
   "_location": "/camelcase",
   "_nodeVersion": "4.3.0",
   "_npmOperationalInternal": {
