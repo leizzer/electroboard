@@ -1,12 +1,8 @@
-class Layer < React::Component::Base
+class Layer < Hyperloop::Component
   param :label
   param :rows
   param :cols
   param :hide
-
-  before_mount do
-    state.blah = 'b'
-  end
 
   def render
     div(class: params.hide) do

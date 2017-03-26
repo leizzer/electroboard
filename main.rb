@@ -1,2 +1,2 @@
-class Main < React::Component::Base
+class Main < Hyperloop::Component
 end

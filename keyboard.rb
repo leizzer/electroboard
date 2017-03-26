@@ -1,13 +1,13 @@
-class Keyboard < React::Component::Base
+class Keyboard < Hyperloop::Component
 
   before_mount do
-    state.keymap! ''
+    mutate.keymap ''
 
-    state.layers! 2
-    state.active_layer! 0
+    mutate.layers 2
+    mutate.active_layer 0
 
-    state.rows! 5
-    state.cols! 12
+    mutate.rows 5
+    mutate.cols 12
 
     @dictionary = Dictionary.instance
     @file_manager = Native(`new FileManager`)
@@ -35,7 +35,7 @@ class Keyboard < React::Component::Base
       matrix += "\n[#{l}] = KEYMAP(#{layer.join("\n")}),\n"
     end
 
-    state.keymap! wrap_matrix(matrix)
+    mutate.keymap wrap_matrix(matrix)
   end
 
   def wrap_matrix matrix
@@ -69,13 +69,13 @@ class Keyboard < React::Component::Base
         label{'Matrix'}
 
         input.matrix(type: 'text', value: state.rows, placeholder: 'R').on(:change) do |e|
-          state.rows! e.target.value.to_i
+          mutate.rows e.target.value.to_i
         end
 
         span{'x'}
 
         input.matrix(type: 'text', value: state.cols, placeholder: 'C').on(:change) do |e|
-          state.cols! e.target.value.to_i
+          mutate.cols e.target.value.to_i
         end
 
       end
@@ -84,7 +84,7 @@ class Keyboard < React::Component::Base
 
       div.layer_tabs do
         state.layers.times do |x|
-          span.tab(class: self.selected_tab(x)) {"Layer #{x}"}.on(:click) { state.active_layer! x }
+          span.tab(class: self.selected_tab(x)) {"Layer #{x}"}.on(:click) { mutate.active_layer x }
         end
       end
 

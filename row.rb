@@ -1,8 +1,8 @@
-class Row < React::Component::Base
+class Row < Hyperloop::Component
   param :cols
 
   before_mount do
-    state.testing! 'holis'
+    mutate.testing 'holis'
   end
 
   def render

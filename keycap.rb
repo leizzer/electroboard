@@ -1,21 +1,21 @@
-class Keycap < React::Component::Base
+class Keycap < Hyperloop::Component
   before_mount do
-    state.key 'A'
-    state.edit! false
+    mutate.key 'A'
+    mutate.edit false
 
-    state.selected false
+    mutate.selected false
   end
 
   def show_value val
-    state.key val
+    mutate.key val
   end
 
   def show_popup val
-    state.edit! val
+    mutate.edit val
   end
 
   def toggle_select
-    state.selected !state.selected
+    mutate.selected !state.selected
   end
 
   def selected
