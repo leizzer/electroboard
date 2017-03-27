@@ -1,4 +1,3 @@
-require 'native'
 class KeyValuePopup < Hyperloop::Component
   attr_accessor :dictionary
 
