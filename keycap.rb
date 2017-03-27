@@ -1,13 +1,14 @@
 class Keycap < Hyperloop::Component
-  before_mount do
-    mutate.key 'A'
-    mutate.edit false
+  state({ edit: false, selected: false })
 
-    mutate.selected false
+  after_mount do
+    mutate.key 'A'
   end
 
-  def show_value val
+  def selected_value val
     mutate.key val
+    toggle_select
+    show_popup false
   end
 
   def show_popup val
@@ -16,13 +17,24 @@ class Keycap < Hyperloop::Component
 
   def toggle_select
     mutate.selected !state.selected
+
+    EventSystem.instance.open_popup self
   end
 
   def selected
     state.selected ? 'selected' : ''
   end
 
+  def selected?
+    state.selected
+  end
+
+  def current_value
+    state.key
+  end
+
   def render
+    return unless state.key
     span do
 
       div.keycap(class: self.selected) do
@@ -32,8 +44,6 @@ class Keycap < Hyperloop::Component
         self.toggle_select
         show_popup true
       end
-
-      KeyValue(keycap: self, show: state.edit)
     end
   end
 

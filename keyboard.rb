@@ -1,14 +1,16 @@
 class Keyboard < Hyperloop::Component
+  state({ loading: true })
 
-  before_mount do
+  after_mount do
+    mutate.loading false
     mutate.keymap ''
 
     mutate.layers 2
-    mutate.active_layer 0
 
     mutate.rows 5
     mutate.cols 12
 
+    @active_layer = 0
     @dictionary = Dictionary.instance
     @file_manager = Native(`new FileManager`)
   end
@@ -50,20 +52,20 @@ class Keyboard < Hyperloop::Component
     "
   end
 
-  def hide_or_show num
-    if num == state.active_layer
-      ''
-    else
-      'hidden'
-    end
-  end
+  def activate_layer num
+    Element.find("#tab#{@active_layer}").remove_class('selected')
+    Element.find("#tab#{num}").add_class('selected')
 
-  def selected_tab num
-    num == state.active_layer ? 'selected' : ''
+    Element.find("#tab_body#{@active_layer}").add_class('hidden')
+    Element.find("#tab_body#{num}").remove_class('hidden')
+
+    @active_layer = num
   end
 
 
   def render
+    return p{'loading...'} if state.loading
+
     div.keyboard do
       form(action: '#') do
         label{'Matrix'}
@@ -84,12 +86,14 @@ class Keyboard < Hyperloop::Component
 
       div.layer_tabs do
         state.layers.times do |x|
-          span.tab(class: self.selected_tab(x)) {"Layer #{x}"}.on(:click) { mutate.active_layer x }
+          span.tab(id: "tab#{x}", class: preselected_tab(x)) {"Layer #{x}"}.on(:click) { activate_layer x }
         end
       end
 
       state.layers.times do |x|
-        Layer(key: x, label: x, ref: "layer#{x}", rows: state.rows, cols: state.cols, hide: self.hide_or_show(x))
+        div.tab_body(id: "tab_body#{x}", class: display_current_tab(x)) do
+          Layer(key: x, label: x, ref: "layer#{x}", rows: state.rows, cols: state.cols)
+        end
       end
 
       br
@@ -109,6 +113,18 @@ class Keyboard < Hyperloop::Component
       pre do
         "#{state.keymap}"
       end
+
+      KeyValuePopup()
     end
+  end
+
+  private
+
+  def preselected_tab num
+    'selected' if @active_layer == num
+  end
+
+  def display_current_tab num
+    'hidden' unless @active_layer == num
   end
 end

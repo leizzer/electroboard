@@ -1,42 +1,46 @@
-class KeyValue < Hyperloop::Component
+require 'native'
+class KeyValuePopup < Hyperloop::Component
   attr_accessor :dictionary
 
-  param :keycap
-  param :show
+  state({ display: 'hidden' })
 
-  before_mount do
-    mutate.value 'A'
-
+  after_mount do
+    @keycap = nil
     @dictionary = Dictionary.instance
+
+    EventSystem.instance.set_keyvalue_popup self
+  end
+
+  def open_for keycap
+    @keycap = keycap
+    @key_value = @keycap.current_value
+
+    mutate.display ''
   end
 
   def set_value value
-    params.keycap.show_value state.value
-    params.keycap.toggle_select
-    params.keycap.show_popup false
-  end
+    @keycap.selected_value value
 
-  def is_open
-    unless params.show
-      'hidden'
-    end
+    mutate.display 'hidden'
   end
 
   def render
-    div(class: "keyvaluepopup #{is_open}") do
+    return if @keycap.nil?
+
+    div(class: "keyvaluepopup #{state.display}") do
       form(action: '#') do
         select do
           @dictionary.key_map.each_pair do |k, v|
             option(value: v){k}
           end
         end.on :change do |e|
-          mutate.value @dictionary.kc_map[e.target.value]
+          @key_value =  @dictionary.kc_map[e.target.value]
         end
 
         input(type: 'submit', value: 'Acept')
       end.on(:submit) do |e|
         e.prevent_default
-        self.set_value e.target.value
+        self.set_value @key_value
       end
     end
   end

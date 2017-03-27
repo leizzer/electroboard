@@ -2,10 +2,9 @@ class Layer < Hyperloop::Component
   param :label
   param :rows
   param :cols
-  param :hide
 
   def render
-    div(class: params.hide) do
+    div do
       p do
         "Layer: #{params.label}"
       end
