@@ -11,66 +11,20 @@
     <script src="vendor/reactrb-express.js"></script>
     <script>if (window.module) module = window.module;</script>
 
-    <script src="file_manager.js"></script>
+    <script src="assets/file_manager.js"></script>
 
     <script type="text/ruby" src="dictionary.rb"></script>
-    <script type="text/ruby" src="main.rb"></script>
-    <script type="text/ruby" src="keycap.rb"></script>
-    <script type="text/ruby" src="row.rb"></script>
-    <script type="text/ruby" src="layer.rb"></script>
+    <script type="text/ruby" src="event_system.rb"></script>
     <script type="text/ruby" src="keyboard.rb"></script>
+    <script type="text/ruby" src="layer.rb"></script>
+    <script type="text/ruby" src="row.rb"></script>
+    <script type="text/ruby" src="keycap.rb"></script>
     <script type="text/ruby" src="key_value.rb"></script>
+    <script type="text/ruby" src="setup_form.rb"></script>
 
-    <style>
-      .hidden {
-        display: none;
-      }
 
-      .matrix {
-        display: inline-block;
-        width: 20px;
-      }
+    <link rel="stylesheet" type="text/css" href="assets/style.css">
 
-      .keycap {
-        display: inline-block;
-        width: 25px;
-        height: 25px;
-        margin: 10px;
-        background-color: #999;
-      }
-
-      .keycap.selected {
-        background-color: #426;
-      }
-
-      .keyvaluepopup {
-        float: left;
-        height: 100px;
-        position: fixed;
-        top: 200px;
-        left: 412px;
-        background-color: silver;
-        text-align: center;
-      }
-
-      .keyvaluepopup form select{
-        margin: 20px 0
-      }
-
-      .layer-tabs {
-        height: 20px;
-      }
-
-      .layer-tabs .tab{
-        padding: 5px;
-        margin-right: 10px;
-      }
-
-      .layer-tabs .tab.selected{
-        background-color: #89a2d2;
-      }
-
-    </style>
   </head>
 
   <body>

@@ -62,37 +62,32 @@ class Keyboard < Hyperloop::Component
     @active_layer = num
   end
 
+  def setup_new_layout setup
+    mutate.cols setup.state.cols
+    mutate.rows setup.state.rows
+    mutate.layers setup.state.layers
+  end
 
   def render
-    return p{'loading...'} if state.loading
+    return if state.loading
 
-    div.keyboard do
-      form(action: '#') do
-        label{'Matrix'}
+    div do
 
-        input.matrix(type: 'text', value: state.rows, placeholder: 'R').on(:change) do |e|
-          mutate.rows e.target.value.to_i
-        end
-
-        span{'x'}
-
-        input.matrix(type: 'text', value: state.cols, placeholder: 'C').on(:change) do |e|
-          mutate.cols e.target.value.to_i
-        end
-
-      end
+      SetupForm(layers: state.layers, rows: state.rows, cols: state.cols, handler: self)
 
       br
 
-      div.layer_tabs do
-        state.layers.times do |x|
-          span.tab(id: "tab#{x}", class: preselected_tab(x)) {"Layer #{x}"}.on(:click) { activate_layer x }
+      div(id: 'keyboard-wrap') do
+        div.layer_tabs do
+          state.layers.times do |x|
+            span.tab(id: "tab#{x}", class: preselected_tab(x)) {"Layer #{x}"}.on(:click) { activate_layer x }
+          end
         end
-      end
 
-      state.layers.times do |x|
-        div.tab_body(id: "tab_body#{x}", class: display_current_tab(x)) do
-          Layer(key: x, label: x, ref: "layer#{x}", rows: state.rows, cols: state.cols)
+        state.layers.times do |x|
+          div.tab_body(id: "tab_body#{x}", class: display_current_tab(x)) do
+            Layer(key: x, label: x, ref: "layer#{x}", rows: state.rows, cols: state.cols)
+          end
         end
       end
 

@@ -1,0 +1,63 @@
+html, body {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  background: -webkit-gradient(linear, left top, left bottom, from(#c1c1fd), to(#233048))
+}
+
+.hidden {
+  display: none;
+}
+
+#setup input {
+  display: inline-block;
+  width: 2em;
+}
+
+.keycap {
+  display: inline-block;
+  width: 1.8em;
+  height: 1.8em;
+  line-height: 1.8em;
+  margin: 5px;
+  background-color: #999;
+}
+
+.keycap.selected {
+  background-color: #426;
+}
+
+.keyvaluepopup {
+  float: left;
+  height: 100px;
+  position: fixed;
+  top: 200px;
+  left: 412px;
+  background-color: silver;
+  text-align: center;
+}
+
+.keyvaluepopup form select{
+  margin: 20px 0
+}
+
+.layer-tabs {
+  height: 20px;
+}
+
+.layer-tabs .tab{
+  padding: 5px;
+  margin-right: 10px;
+}
+
+.layer-tabs .tab.selected{
+  background-color: #89a2d2;
+}
+
+.tab-body {
+  text-align: center;
+}
+
+
