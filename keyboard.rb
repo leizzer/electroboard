@@ -75,8 +75,6 @@ class Keyboard < Hyperloop::Component
 
       SetupForm(layers: state.layers, rows: state.rows, cols: state.cols, handler: self)
 
-      br
-
       div(id: 'keyboard-wrap') do
         div.layer_tabs do
           state.layers.times do |x|
@@ -91,19 +89,19 @@ class Keyboard < Hyperloop::Component
         end
       end
 
-      br
-      button do
-        'Generate keymap'
-      end.on :click do
-        generate_keymap
-      end
+      div(id: 'actions') do
+        button do
+          'Generate keymap'
+        end.on :click do
+          generate_keymap
+        end
 
-      button do
-        'Save'
-      end.on :click do
-        @file_manager.openSaveFile(state.keymap)
+        button do
+          'Save'
+        end.on :click do
+          @file_manager.openSaveFile(state.keymap)
+        end
       end
-      br
 
       pre do
         "#{state.keymap}"

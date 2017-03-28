@@ -2,7 +2,7 @@ class Keycap < Hyperloop::Component
   state({ edit: false, selected: false })
 
   after_mount do
-    mutate.key 'A'
+    mutate.key ''
   end
 
   def selected_value val

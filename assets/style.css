@@ -1,32 +1,57 @@
 html, body {
   height: 100%;
   width: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 body {
-  background: -webkit-gradient(linear, left top, left bottom, from(#c1c1fd), to(#233048))
+  background: #3e3e3e;
+  color: #BBB;
 }
 
 .hidden {
   display: none;
 }
 
-#setup input {
+button, input[type="submit"] {
+  background: #8dd690;
+  border: none;
+  border-radius: 3px;
+  margin: 5px;
+  height: 1.6em;
+  padding: 0px 10px;
+}
+
+#setup {
+  padding: 20px;
+}
+
+#setup input[type="text"] {
   display: inline-block;
   width: 2em;
+  margin: 10px 10px;
+  border: none;
+  border-radius: 3px;
+  text-align: center;
+  background-color: #e0e0e0;
 }
 
 .keycap {
+  overflow: hidden;
   display: inline-block;
   width: 1.8em;
   height: 1.8em;
   line-height: 1.8em;
-  margin: 5px;
+  margin: 0.2em;
+  border-radius: 2px;
+  border: 3px solid #afafaf;
   background-color: #999;
+  color: #212121;
 }
 
 .keycap.selected {
-  background-color: #426;
+  background-color: #c1ab37;
 }
 
 .keyvaluepopup {
@@ -40,24 +65,33 @@ body {
 }
 
 .keyvaluepopup form select{
-  margin: 20px 0
+  margin: 20px 0;
 }
 
 .layer-tabs {
-  height: 20px;
+  height: 1.9em;
+  padding: 0px 20px;
+  background-color: #512b5a;
+  overflow: overlay;
 }
 
 .layer-tabs .tab{
-  padding: 5px;
   margin-right: 10px;
+  padding: 0 4px;
+  height: 1.9em;
+  line-height: 1.9em;
+  display: inline-block;
 }
 
 .layer-tabs .tab.selected{
-  background-color: #89a2d2;
+  background-color: #c1ab37;
+  color: #212121;
 }
 
 .tab-body {
   text-align: center;
 }
 
-
+#actions {
+  padding: 20px;
+}
