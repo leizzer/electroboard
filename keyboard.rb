@@ -41,15 +41,7 @@ class Keyboard < Hyperloop::Component
   end
 
   def wrap_matrix matrix
-    "
-    #include \"keymap_common.h\"
-
-    const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-      #{matrix}
-    };
-
-    const action_t fn_actions[] PROGMEM = { };
-    "
+   "#include \"keymap_common.h\"\nconst uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {\n#{matrix}\n};\n\nconst action_t fn_actions[] PROGMEM = { };"
   end
 
   def activate_layer num
