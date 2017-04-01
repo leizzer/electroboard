@@ -24,4 +24,20 @@ class FileManager {
       });
     });
   }
+
+  loadFile() {
+    var fs = this.fs;
+
+    this.dialog.showOpenDialog(function(fileName) {
+      if (fileName === undefined){
+        console.log("You didn't selacted a file");
+        return;
+      }
+
+      var tmk = Opal.TMK.$new()
+      var result = fs.readFileSync(fileName[0], 'utf8');
+
+      tmk.$process(result);
+    });
+  }
 }

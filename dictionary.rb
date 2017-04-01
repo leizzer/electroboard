@@ -262,9 +262,7 @@ class Dictionary
     @kc_map = @key_map.invert
   end
 
-  @@instance = Dictionary.new
-
   def self.instance
-    @@instance
+    @instance ||= Dictionary.new
   end
 end

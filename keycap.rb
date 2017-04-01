@@ -33,6 +33,10 @@ class Keycap < Hyperloop::Component
     state.key
   end
 
+  def set_value val
+    mutate.key val
+  end
+
   def render
     return unless state.key
     span do

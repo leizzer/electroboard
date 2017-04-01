@@ -13,6 +13,21 @@ class Keyboard < Hyperloop::Component
     @active_layer = 0
     @dictionary = Dictionary.instance
     @file_manager = Native(`new FileManager`)
+    @keymap = nil
+
+    EventSystem.instance.listen_keymap_loaded self
+  end
+
+  after_update do
+    puts 'UPDATE'
+    reasign_keyvalues @keymap if @keymap
+  end
+
+  def on_keymap_loaded keymap
+    @keymap = keymap
+    mutate.layers keymap.layers_count
+    mutate.rows keymap.rows_count
+    mutate.cols keymap.cols_count
   end
 
   def generate_keymap
@@ -25,16 +40,16 @@ class Keyboard < Hyperloop::Component
         row = []
 
         state.cols.times do |c|
-          value = self.refs["layer#{l}"].refs["row#{r}"].refs["key#{c}"].state.key
+          value = get_keyvalue_on l, r, c
           row << @dictionary.key_map[value]
         end
 
-        row << "\\" if r < state.rows - 1
+        row << "\\" #if r < state.rows - 1
 
         layer << row.join(', ')
       end
 
-      matrix += "\n[#{l}] = KEYMAP(#{layer.join("\n")}),\n"
+      matrix += "\n[#{l}] = KEYMAP(\n#{layer.join("\n")}\n),\n"
     end
 
     mutate.keymap wrap_matrix(matrix)
@@ -62,6 +77,7 @@ class Keyboard < Hyperloop::Component
 
   def render
     return if state.loading
+    puts 'rerendering'
 
     div do
 
@@ -76,7 +92,7 @@ class Keyboard < Hyperloop::Component
 
         state.layers.times do |x|
           div.tab_body(id: "tab_body#{x}", class: display_current_tab(x)) do
-            Layer(key: x, label: x, ref: "layer#{x}", rows: state.rows, cols: state.cols)
+            Layer(label: x, ref: "layer#{x}", rows: state.rows, cols: state.cols)
           end
         end
       end
@@ -92,6 +108,12 @@ class Keyboard < Hyperloop::Component
           'Save'
         end.on :click do
           @file_manager.openSaveFile(state.keymap)
+        end
+
+        button do
+          'Open'
+        end.on :click do
+          @file_manager.loadFile()
         end
       end
 
@@ -111,5 +133,25 @@ class Keyboard < Hyperloop::Component
 
   def display_current_tab num
     'hidden' unless @active_layer == num
+  end
+
+  def get_keyvalue_on layer, row, column
+    self.refs["layer#{layer}"].refs["row#{row}"].refs["key#{column}"].state.key
+  end
+
+  def set_keyvalue_on layer, row, column, value
+    self.refs["layer#{layer}"].refs["row#{row}"].refs["key#{column}"].set_value value
+  end
+
+  def reasign_keyvalues keymap
+    state.layers.times do |l|
+      state.rows.times do |r|
+        state.cols.times do |c|
+          puts keymap.layers[l][r][c]
+          set_keyvalue_on l, r, c, keymap.layers[l][r][c]
+          puts ">>#{get_keyvalue_on l, r, c}"
+        end
+      end
+    end
   end
 end
