@@ -11,6 +11,10 @@ class KeymapLoader
     @layers = []
   end
 
+  def generate_empty_keymap
+    @layers << [] << []
+  end
+
 end
 
 class TMK < KeymapLoader
