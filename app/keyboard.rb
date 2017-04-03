@@ -16,6 +16,7 @@ class Keyboard < Hyperloop::Component
     @file_manager = Native(`new FileManager`)
     @keymap_file = ''
 
+    EventSystem.instance.set_keymap state.keymap
     EventSystem.instance.listen 'keymap_loaded', self
   end
 

@@ -35,7 +35,7 @@ class KeymapLoader
       @rows_count.times do |r|
         @layers[l] << []
         @cols_count.times do |c|
-          @layers[l][r] << ''
+          @layers[l][r] << 'Empty'
         end
       end
     end
