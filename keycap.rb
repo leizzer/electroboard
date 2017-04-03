@@ -1,12 +1,17 @@
 class Keycap < Hyperloop::Component
-  state({ edit: false, selected: false })
+  state({ edit: false, selected: false, key: nil})
+  param :val
+  param :ilayer
+  param :irow
+  param :icol
 
   after_mount do
-    mutate.key ''
+    mutate.key params.val
   end
 
   def selected_value val
-    mutate.key val
+    set_value val
+
     toggle_select
     show_popup false
   end
@@ -35,6 +40,7 @@ class Keycap < Hyperloop::Component
 
   def set_value val
     mutate.key val
+    EventSystem.instance.value_changed val, params.ilayer, params.irow, params.icol
   end
 
   def render

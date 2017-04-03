@@ -13,17 +13,35 @@ class EventSystem
     @keyvalue_popup.open_for keycap
   end
 
-  def keymap_loaded keymap
-    @listeners[:on_keymap_loaded].each do |obj|
-      obj.on_keymap_loaded keymap
-    end
+  def set_keymap keymap
+    @keymap = keymap
   end
 
-  def listen_keymap_loaded obj
-    @listeners[:on_keymap_loaded] << obj
+  def value_changed val, layer, row, col
+    @keymap.set_keyvalue val, layer, row, col
+  end
+
+  def listen event, obj
+    @listeners[event] << obj
+    create_method event
   end
 
   def self.instance
     @instance ||= EventSystem.new
+  end
+
+  private
+
+  def create_method event
+    name = "on_#{event}"
+    return if respond_to? name
+
+    define_singleton_method name do |*args|
+      @listeners[event].each do |obj|
+        if obj.respond_to? name
+          obj.send name, *args
+        end
+      end
+    end
   end
 end

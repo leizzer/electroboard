@@ -3,31 +3,32 @@ class Keyboard < Hyperloop::Component
 
   after_mount do
     mutate.loading false
-    mutate.keymap ''
 
     mutate.layers 2
 
     mutate.rows 5
     mutate.cols 12
 
+    mutate.keymap KeymapLoader.new.generate_empty_keymap state.layers, state.rows, state.cols
+
     @active_layer = 0
     @dictionary = Dictionary.instance
     @file_manager = Native(`new FileManager`)
-    @keymap = nil
+    @keymap_file = ''
 
-    EventSystem.instance.listen_keymap_loaded self
-  end
-
-  after_update do
-    puts 'UPDATE'
-    reasign_keyvalues @keymap if @keymap
+    EventSystem.instance.listen 'keymap_loaded', self
   end
 
   def on_keymap_loaded keymap
-    @keymap = keymap
+    reset_values
+    force_update!
+
     mutate.layers keymap.layers_count
     mutate.rows keymap.rows_count
     mutate.cols keymap.cols_count
+
+    EventSystem.instance.set_keymap keymap
+    mutate.keymap keymap
   end
 
   def generate_keymap
@@ -44,7 +45,7 @@ class Keyboard < Hyperloop::Component
           row << @dictionary.key_map[value]
         end
 
-        row << "\\" #if r < state.rows - 1
+        row << "\\"
 
         layer << row.join(', ')
       end
@@ -52,7 +53,9 @@ class Keyboard < Hyperloop::Component
       matrix += "\n[#{l}] = KEYMAP(\n#{layer.join("\n")}\n),\n"
     end
 
-    mutate.keymap wrap_matrix(matrix)
+    @keymap_file = wrap_matrix(matrix)
+
+    Element.find('pre').html(@keymap_file)
   end
 
   def wrap_matrix matrix
@@ -73,11 +76,12 @@ class Keyboard < Hyperloop::Component
     mutate.cols setup.state.cols
     mutate.rows setup.state.rows
     mutate.layers setup.state.layers
+
+    mutate.keymap state.keymap.generate_empty_keymap(state.layers, state.rows, state.cols)
   end
 
   def render
     return if state.loading
-    puts 'rerendering'
 
     div do
 
@@ -85,14 +89,14 @@ class Keyboard < Hyperloop::Component
 
       div(id: 'keyboard-wrap') do
         div.layer_tabs do
-          state.layers.times do |x|
+          state.keymap.layers_count.times do |x|
             span.tab(id: "tab#{x}", class: preselected_tab(x)) {"Layer #{x}"}.on(:click) { activate_layer x }
           end
         end
 
-        state.layers.times do |x|
+        state.keymap.layers_count.times do |x|
           div.tab_body(id: "tab_body#{x}", class: display_current_tab(x)) do
-            Layer(label: x, ref: "layer#{x}", rows: state.rows, cols: state.cols)
+            Layer(key: x, label: x, ref: "layer#{x}", layer: state.keymap.layers[x], ilayer: x)
           end
         end
       end
@@ -107,7 +111,7 @@ class Keyboard < Hyperloop::Component
         button do
           'Save'
         end.on :click do
-          @file_manager.openSaveFile(state.keymap)
+          @file_manager.openSaveFile(@keymap_file)
         end
 
         button do
@@ -118,7 +122,7 @@ class Keyboard < Hyperloop::Component
       end
 
       pre do
-        "#{state.keymap}"
+        ""
       end
 
       KeyValuePopup()
@@ -136,22 +140,15 @@ class Keyboard < Hyperloop::Component
   end
 
   def get_keyvalue_on layer, row, column
-    self.refs["layer#{layer}"].refs["row#{row}"].refs["key#{column}"].state.key
+    state.keymap.layers[layer][row][column]
   end
 
-  def set_keyvalue_on layer, row, column, value
-    self.refs["layer#{layer}"].refs["row#{row}"].refs["key#{column}"].set_value value
+  def reset_values keymap=nil
+    mutate.layers 0
+    mutate.rows 0
+    mutate.cols 0
+
+    mutate.keymap KeymapLoader.new
   end
 
-  def reasign_keyvalues keymap
-    state.layers.times do |l|
-      state.rows.times do |r|
-        state.cols.times do |c|
-          puts keymap.layers[l][r][c]
-          set_keyvalue_on l, r, c, keymap.layers[l][r][c]
-          puts ">>#{get_keyvalue_on l, r, c}"
-        end
-      end
-    end
-  end
 end

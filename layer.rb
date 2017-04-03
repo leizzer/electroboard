@@ -1,7 +1,7 @@
 class Layer < Hyperloop::Component
   param :label
-  param :rows
-  param :cols
+  param :layer
+  param :ilayer
 
   def render
     div do
@@ -9,7 +9,7 @@ class Layer < Hyperloop::Component
         "Layer: #{params.label}"
       end
 
-      params.rows.times{|x| Row(ref: "row#{x}", cols: params.cols) }
+      params.layer.each_with_index {|row, x| Row(ref: "row#{x}", row: row, irow: x, ilayer: params.ilayer) }
     end
   end
 end

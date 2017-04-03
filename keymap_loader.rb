@@ -11,8 +11,34 @@ class KeymapLoader
     @layers = []
   end
 
-  def generate_empty_keymap
-    @layers << [] << []
+  def generate_empty_keymap l, r, c
+    @layers_count = l
+    @rows_count = r
+    @cols_count = c
+
+    create_matrix
+
+    self
+  end
+
+  def set_keyvalue val, l, r, c
+    @layers[l][r][c] = val
+  end
+
+  private
+
+  def create_matrix
+    @layers = []
+
+    @layers_count.times do |l|
+      @layers << []
+      @rows_count.times do |r|
+        @layers[l] << []
+        @cols_count.times do |c|
+          @layers[l][r] << ''
+        end
+      end
+    end
   end
 
 end
@@ -24,6 +50,8 @@ class TMK < KeymapLoader
   end
 
   def process text
+    dictionary = Dictionary.new
+
     #Thinking about using js instead, because I can't use #captures from ruby
     text.split(/^\n/).each do |batch|
       result = batch.match(@layers_regex).to_a
@@ -31,16 +59,18 @@ class TMK < KeymapLoader
       result.each do |l|
         next if l.include? 'KEYMAP'
 
-        @layers_count += 1
 
         row = l.split("\\\n")
 
         keys = []
         row.each do |r|
-          keys << r.gsub(/\s/, '').split(',')
+          values = r.gsub(/\s/, '').split(',')
+          values.map! {|k| dictionary.kc_map[k.to_sym]}
+          keys << values
         end
 
-        @layers << keys
+        @layers[@layers_count] = keys
+        @layers_count += 1
       end
     end
 
@@ -51,6 +81,6 @@ class TMK < KeymapLoader
       end
     end
 
-    EventSystem.instance.keymap_loaded self
+    EventSystem.instance.on_keymap_loaded self
   end
 end
