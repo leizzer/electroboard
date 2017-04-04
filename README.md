@@ -2,6 +2,12 @@
 
 A keymap generator for custom/homemade keyboards using [tmk_firmware](https://github.com/tmk/tmk_keyboard) keycodes.
 
+## Builds
+(already packaged, ready to use)
+
+* Linux [download x64](https://drive.google.com/open?id=0B5iM8TQ7sHptZHQtYUUwdnJSQjQ) | [download ia32](https://drive.google.com/open?id=0B5iM8TQ7sHptVVF3MjZSWmdBMFE)
+* OS X [download x64](https://drive.google.com/open?id=0B5iM8TQ7sHptUWpHVjB6Y1ppa28) 
+
 ## Technology in use
 
 * [Electron](https://github.com/electron/electron)
