@@ -8,6 +8,17 @@ A keymap generator for custom/homemade keyboards using [tmk_firmware](https://gi
 * Linux [download x64](https://drive.google.com/open?id=0B5iM8TQ7sHptZHQtYUUwdnJSQjQ) | [download ia32](https://drive.google.com/open?id=0B5iM8TQ7sHptVVF3MjZSWmdBMFE)
 * OS X [download x64](https://drive.google.com/open?id=0B5iM8TQ7sHptUWpHVjB6Y1ppa28) 
 
+## How to use
+
+1. Generate a matrix with the amount of layers that you want. Or import a TMK keymap that you already have (functions won't be loaded.
+2. Click the keycaps that you want to change and select the new value from the popup.
+3. Generate the keymap.
+4. Save it.
+
+### Known issue
+
+This version doesn't handle function definitions for now, so if you are importing an existing keymap to modify it, you are going to copy the functions from the old file to the new one. Another way is to define the functions in other file and then just import that file.
+
 ## Technology in use
 
 * [Electron](https://github.com/electron/electron)
@@ -72,4 +83,6 @@ LCTL, LGUI, LALT, NO, FN0, SPC, SPC, FN1, NO, RALT, BSPC, RCTL, \
 
 ## ToDo
 
+* Package for Windows
 * Import and Export qmk_firmware
+* Manage Functions
