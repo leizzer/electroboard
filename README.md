@@ -23,7 +23,7 @@ This version doesn't handle function definitions for now, so if you are importin
 ## Technology in use
 
 * [Electron](https://github.com/electron/electron)
-* [Hyper-react (Reactrb)](https://github.com/ruby-hyperloop/hyper-react)
+* [Ruby-Hyperloop](https://github.com/ruby-hyperloop/hyper-react)
 * [Opal](https://github.com/opal/opal)
 
 ## Fileformat
