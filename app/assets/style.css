@@ -96,3 +96,7 @@ button, input[type="submit"] {
 #actions {
   padding: 20px;
 }
+
+pre {
+  padding: 0 20px 20px 30px;
+}
