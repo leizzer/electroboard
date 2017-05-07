@@ -84,7 +84,5 @@ LCTL, LGUI, LALT, NO, FN0, SPC, SPC, FN1, NO, RALT, BSPC, RCTL, \
 
 ## ToDo
 
-* Package for Windows
-* Import and Export qmk_firmware
 * Manage Functions
 * Custom CSS from user
