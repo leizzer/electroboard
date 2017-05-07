@@ -11,10 +11,15 @@ A keymap generator for custom/homemade keyboards using [tmk_firmware](https://gi
 
 ## How to use
 
-1. Generate a matrix with the amount of layers that you want. Or import a TMK keymap that you already have (functions won't be loaded.
+1. Generate a matrix with the amount of layers that you want. Or import a keymap that you already have (function definitions won't be loaded).
 2. Click the keycaps that you want to change and select the new value from the popup.
 3. Generate the keymap.
-4. Save it.
+4. Save it. (I recommend making a back up of your current keymap)
+
+#### Firmware selection
+
+1. Select the firmware that you want to work with at the top. (TMK or QMK)
+2. Click the "Change" button, *even* if the amount of layers, rows and columns are the same.
 
 ### Known issue
 
@@ -61,13 +66,18 @@ LCTL, NO, NO, NO, FN0, SPC, SPC, FN1, NO, NO, NO, RCTL, \
 };
 ```
 
-To import a file, the keymap should respect this format:
+## Import a file
+
+The file to import should respect this format:
+
+#### TMK
 
  - Each layer starts with `KEYMAP`.
  - New line after `KEYMAP(`.
  - Each line is a row.
- - Each row starts at the start of the line.
+ - Each row starts at the start of the line. (No space at the beginning)
  - Each row ends with `\`.
+ - Empty line between layers.
 
 ```c
 [0] = KEYMAP(
@@ -77,7 +87,38 @@ CAPS, A, S, D, F, G, H, J, K, L, SCLN, QUOT, \
 LSFT, Z, X, C, V, B, N, M, COMM, DOT, SLSH, RSFT, \
 LCTL, LGUI, LALT, NO, FN0, SPC, SPC, FN1, NO, RALT, BSPC, RCTL, \
 ),
+
+[1] = KEYMAP(
+...
+),
 ```
+
+#### QMK
+
+ - Use numbers for layers instead of variables. (eg [0] instead of [QWERTY]).
+ - New line after `[0] = {`.
+ - Each line is a row.
+ - Each row starts at the start of the line. (No space at the beginning)
+ - Each row ends with a new line.
+ - Empty line between layers.
+
+```c
+[0] = {
+{KC_TAB,  KC_Q,    KC_W,    KC_E,   KC_R,    KC_T,   KC_Y,   KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC},
+{KC_ESC,  KC_A,    KC_S,    KC_D,   KC_F,    KC_G,   KC_H,   KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT},
+{KC_LSFT, KC_Z,    KC_X,    KC_C,   KC_V,    KC_B,   KC_N,   KC_M,    KC_COMM, KC_DOT,  KC_SLSH, MT(MOD_RSFT, KC_ENT)},
+{KC_LCTL, KC_LGUI, KC_LALT, M(0),   MO(_LW), KC_SPC, KC_SPC, MO(_RS), KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT}
+},
+
+[1] = {
+...
+}
+```
+
+#### Note
+
+If you ain't sure about the format, my advice is to generate and save a dummy file to see what you have to change in your current keymap to respect the expected file format.
+
 
 ## Screenshot
 ![in action](/images/screenshot.png)
