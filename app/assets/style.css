@@ -64,8 +64,9 @@ button, input[type="submit"] {
   text-align: center;
 }
 
-.keyvaluepopup form select{
-  margin: 20px 0;
+.keyvaluepopup form input {
+  display: block;
+  margin: 20px 0px;
 }
 
 .layer-tabs {

@@ -9,7 +9,7 @@ class Keyboard < Hyperloop::Component
     mutate.rows 5
     mutate.cols 12
 
-    mutate.keymap KeymapLoader.new.generate_empty_keymap state.layers, state.rows, state.cols
+    mutate.keymap Firmware.instance.generate_empty_keymap state.layers, state.rows, state.cols
 
     @active_layer = 0
     @dictionary = Dictionary.instance
@@ -18,6 +18,7 @@ class Keyboard < Hyperloop::Component
 
     EventSystem.instance.set_keymap state.keymap
     EventSystem.instance.listen 'keymap_loaded', self
+    EventSystem.instance.listen 'setup_new_layout', self
   end
 
   def on_keymap_loaded keymap
@@ -33,34 +34,8 @@ class Keyboard < Hyperloop::Component
   end
 
   def generate_keymap
-    matrix = ''
-
-    state.layers.times do |l|
-      layer = []
-
-      state.rows.times do |r|
-        row = []
-
-        state.cols.times do |c|
-          value = get_keyvalue_on l, r, c
-          row << @dictionary.key_map[value]
-        end
-
-        row << "\\"
-
-        layer << row.join(', ')
-      end
-
-      matrix += "\n[#{l}] = KEYMAP(\n#{layer.join("\n")}\n),\n"
-    end
-
-    @keymap_file = wrap_matrix(matrix)
-
+    @keymap_file = Firmware.instance.export_keymap state.layers, state.rows, state.cols, state.keymap
     Element.find('pre').html(@keymap_file)
-  end
-
-  def wrap_matrix matrix
-   "#include \"keymap_common.h\"\nconst uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {\n#{matrix}\n};\n\nconst action_t fn_actions[] PROGMEM = { };"
   end
 
   def activate_layer num
@@ -73,23 +48,26 @@ class Keyboard < Hyperloop::Component
     @active_layer = num
   end
 
-  def setup_new_layout setup
+  def on_setup_new_layout setup
+    reset_values
+    force_update!
+
     mutate.cols setup.state.cols
     mutate.rows setup.state.rows
     mutate.layers setup.state.layers
 
-    mutate.keymap state.keymap.generate_empty_keymap(state.layers, state.rows, state.cols)
+    mutate.keymap Firmware.instance.generate_empty_keymap(state.layers, state.rows, state.cols)
+    EventSystem.instance.set_keymap state.keymap
   end
 
   def render
     return if state.loading
-
     div do
-
-      SetupForm(layers: state.layers, rows: state.rows, cols: state.cols, handler: self)
+      SetupForm(layers: state.layers, rows: state.rows, cols: state.cols)
 
       div(id: 'keyboard-wrap') do
         div.layer_tabs do
+          span.tab { b{"#{Firmware.instance.name.upcase}"} }
           state.keymap.layers_count.times do |x|
             span.tab(id: "tab#{x}", class: preselected_tab(x)) {"Layer #{x}"}.on(:click) { activate_layer x }
           end
@@ -97,7 +75,7 @@ class Keyboard < Hyperloop::Component
 
         state.keymap.layers_count.times do |x|
           div.tab_body(id: "tab_body#{x}", class: display_current_tab(x)) do
-            Layer(key: x, label: x, ref: "layer#{x}", layer: state.keymap.layers[x], ilayer: x)
+            Layer(label: x, layer: state.keymap.layers[x], ilayer: x)
           end
         end
       end
@@ -149,7 +127,7 @@ class Keyboard < Hyperloop::Component
     mutate.rows 0
     mutate.cols 0
 
-    mutate.keymap KeymapLoader.new
+    mutate.keymap Firmware.instance.empty_keymap
   end
 
 end

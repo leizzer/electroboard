@@ -1,8 +1,8 @@
 class EventSystem
-  attr_reader :keyvalue_popupa, :keyboard
+  attr_reader :keyvalue_popup, :keyboard
 
   def initialize
-    @listeners = Hash.new []
+    @listeners = Hash.new { |h, k| h[k]=[] }
   end
 
   def set_keyvalue_popup popup
@@ -22,7 +22,7 @@ class EventSystem
   end
 
   def listen event, obj
-    @listeners[event] << obj
+    @listeners[event].push obj
     create_method event
   end
 

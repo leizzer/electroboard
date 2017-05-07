@@ -9,6 +9,10 @@ class Keycap < Hyperloop::Component
     mutate.key params.val
   end
 
+  before_receive_props do
+    mutate.key params.val
+  end
+
   def selected_value val
     set_value val
 

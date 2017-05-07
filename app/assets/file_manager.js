@@ -34,10 +34,10 @@ class FileManager {
         return;
       }
 
-      var tmk = Opal.TMK.$new()
+      var firmware = Opal.Firmware.$instance()
       var result = fs.readFileSync(fileName[0], 'utf8');
 
-      tmk.$process(result);
+      firmware.$load(result);
     });
   }
 }

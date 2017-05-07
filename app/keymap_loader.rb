@@ -43,14 +43,15 @@ class KeymapLoader
 
 end
 
-class TMK < KeymapLoader
+class TMKLoader < KeymapLoader
   def initialize
     super
     @layers_regex = /KEYMAP\(\s([\w,\s\\]*)/
   end
 
   def process text
-    dictionary = Dictionary.new
+    @layers_count = 0
+    dictionary = Dictionary.instance
 
     #Thinking about using js instead, because I can't use #captures from ruby
     text.split(/^\n/).each do |batch|
@@ -65,12 +66,61 @@ class TMK < KeymapLoader
         keys = []
         row.each do |r|
           values = r.gsub(/\s/, '').split(',')
-          values.map! {|k| dictionary.kc_map[k.to_sym]}
+          values.map! {|k| dictionary.get_key(k.to_sym)}
           keys << values
         end
 
-        @layers[@layers_count] = keys
-        @layers_count += 1
+        unless keys.empty?
+          @layers[@layers_count] = keys
+          @layers_count += 1
+        end
+      end
+    end
+
+    if @layers[0]
+      @rows_count = @layers[0].size
+      if @layers[0][0]
+        @cols_count = @layers[0][0].size
+      end
+    end
+
+    EventSystem.instance.on_keymap_loaded self
+  end
+end
+
+class QMKLoader < KeymapLoader
+  def initialize
+    super
+    @layers_regex = /\=\s*.*([\{\s\w\/,\\\(\)}]*)/
+  end
+
+  def process text
+    @layers_count = 0
+    dictionary = Dictionary.instance
+
+    #Thinking about using js instead, because I can't use #captures from ruby
+    text.split(/^\n/).each do |batch|
+      result = batch.match(@layers_regex).to_a
+
+      result.each do |l|
+        next if l.include? '='
+
+        row = l.split("\n")
+        row.select! {|r| r.match /[A-Z]/}
+
+        row = row.map{|r| r.match(/\{([A-Z_, a-z0-9\(\)]+)/)[1]}
+
+        keys = []
+        row.each do |r|
+          values = r.gsub(/\s/, '').split(/(?![^\(]*\))\,/)
+          values.map! {|k| dictionary.get_key(k.to_sym)}
+          keys << values
+        end
+
+        unless keys.empty?
+          @layers[@layers_count] = keys
+          @layers_count += 1
+        end
       end
     end
 

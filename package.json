@@ -4,12 +4,23 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "pack": "build --dir",
+    "dist": "build",
+    "pack-win": "build --dir --win",
+    "dist-win": "build --win"
   },
-  "author": "",
+  "author": "leizzer",
   "license": "ISC",
   "devDependencies": {
-    "electron": "^1.6.2",
-    "electron-prebuilt": "^1.4.1"
+    "electron": "~1.6.2"
+  },
+  "build": {
+    "appId": "com.electroboard.app",
+    "win": {
+      "target": [
+        "zip"
+      ]
+    }
   }
 }

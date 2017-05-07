@@ -9,7 +9,7 @@ class Layer < Hyperloop::Component
         "Layer: #{params.label}"
       end
 
-      params.layer.each_with_index {|row, x| Row(ref: "row#{x}", row: row, irow: x, ilayer: params.ilayer) }
+      params.layer.each_with_index {|row, x| Row(key: x, ref: "row#{x}", row: row, irow: x, ilayer: params.ilayer) }
     end
   end
 end
