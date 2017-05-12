@@ -12,7 +12,7 @@ A keymap generator for custom/homemade keyboards using [tmk_firmware](https://gi
 ## How to use
 
 1. Generate a matrix with the amount of layers that you want. Or import a keymap that you already have (function definitions won't be loaded).
- - If you are importing a file, move all your custom code like functions and imports to `keymap_common.h` in the same directory, that will be imported by the new generated keymap.
+    1. If you are importing a file, move all your custom code like functions and imports to `keymap_common.h` in the same directory, that will be imported by the new generated keymap.
 2. Click the keycaps that you want to change and select the new value from the popup.
 3. Generate the keymap.
 4. Save it. (I recommend making a back up of your current keymap)
