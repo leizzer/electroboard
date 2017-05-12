@@ -56,12 +56,12 @@ button, input[type="submit"] {
 
 .keyvaluepopup {
   float: left;
-  height: 100px;
   position: fixed;
   top: 200px;
   left: 412px;
   background-color: silver;
   text-align: center;
+  padding: 20px;
 }
 
 .keyvaluepopup form input {
