@@ -11,20 +11,31 @@ A keymap generator for custom/homemade keyboards using [tmk_firmware](https://gi
 
 ## How to use
 
-1. Generate a matrix with the amount of layers that you want. Or import a keymap that you already have (function definitions won't be loaded).
-    1. If you are importing a file, move all your custom code like functions and imports to `keymap_common.h` in the same directory, that will be imported by the new generated keymap.
+1. Generate a matrix with the amount of layers that you want.
 2. Click the keycaps that you want to change and select the new value from the popup.
 3. Generate the keymap.
-4. Save it. (I recommend making a back up of your current keymap)
+4. Save it.
+
+### Importing an existing keymap
+
+For an existing keymap you would probably have to do some modifications to the file before importing it. Refer to [File Formats](https://github.com/leizzer/electroboard#fileformat)
+
+If your keymap has function definitions, imports and more. Move them to a separated file in the same directory and name it `keymap_common.h`. That file will be imported by the new generated code.
+
+Remove spaces and add new lines when needed, ass the [File Formats](https://github.com/leizzer/electroboard#fileformat) section says for the firmware of your choice.
+
+If you are using variables to define the layers, please change it back to numbers. (e.g.: [0]={...} instead of [\_LW]={...})
 
 #### Firmware selection
 
 1. Select the firmware that you want to work with at the top. (TMK or QMK)
 2. Click the "Change" button, *even* if the amount of layers, rows and columns are the same.
 
-### Known issue
+### Known issue:
 
-This version doesn't handle function definitions for now, so if you are importing an existing keymap to modify it, you are going to copy the functions from the old file to the new one. Another way is to define the functions in other file and then just import that file.
+This version doesn't handle function definitions and extra code like imports and definitions. So if you are importing an existing keymap to modify it, you should move all your custom code and functions to `keymap_common.h` that is imported by the new generated file.
+
+Any unrecognized code will be loaded as it is, for example `MO(0)`. See the screenshots.
 
 ## Technology in use
 
@@ -108,7 +119,7 @@ LCTL, LGUI, LALT, NO, FN0, SPC, SPC, FN1, NO, RALT, BSPC, RCTL, \
 {KC_TAB,  KC_Q,    KC_W,    KC_E,   KC_R,    KC_T,   KC_Y,   KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC},
 {KC_ESC,  KC_A,    KC_S,    KC_D,   KC_F,    KC_G,   KC_H,   KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT},
 {KC_LSFT, KC_Z,    KC_X,    KC_C,   KC_V,    KC_B,   KC_N,   KC_M,    KC_COMM, KC_DOT,  KC_SLSH, MT(MOD_RSFT, KC_ENT)},
-{KC_LCTL, KC_LGUI, KC_LALT, M(0),   MO(_LW), KC_SPC, KC_SPC, MO(_RS), KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT}
+{KC_LCTL, KC_LGUI, KC_LALT, M(0),   MO(0), KC_SPC, KC_SPC, MO(1), KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT}
 },
 
 [1] = {
