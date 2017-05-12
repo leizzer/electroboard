@@ -47,7 +47,7 @@ class TMKGenerator < KeymapGenerator
   end
 
   def wrap_matrix matrix
-   "#include \"keymap_common.h\"\nconst uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {\n#{matrix}\n};\n\nconst action_t fn_actions[] PROGMEM = { };"
+   "#include \"keymap_common.h\"\nconst uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {\n#{matrix}\n};"
   end
 
 end
@@ -84,7 +84,7 @@ class QMKGenerator < KeymapGenerator
   end
 
   def wrap_matrix matrix
-   "#include \"keymap_common.h\"\nconst uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {\n#{matrix}\n};\n\nconst uint16_t PROGMEM fn_actions[] = { };"
+   "#include \"keymap_common.h\"\nconst uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {\n#{matrix}\n};"
   end
 
 end
