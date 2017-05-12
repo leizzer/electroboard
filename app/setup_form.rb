@@ -22,6 +22,7 @@ class SetupForm < Hyperloop::Component
         label{"TMK"}
         input(type: 'radio', name: 'firmware', value: 'tmk', checked: state.firmware == 'tmk').on(:change) do |e|
           mutate.firmware e.target.value
+          rerender
         end
 
         span{" | "}
@@ -29,6 +30,7 @@ class SetupForm < Hyperloop::Component
         label{"QMK"}
         input(type: 'radio', name: 'firmware', value: 'qmk', checked: state.firmware == 'qmk').on(:change) do |e|
           mutate.firmware e.target.value
+          rerender
         end
 
         br
@@ -37,12 +39,14 @@ class SetupForm < Hyperloop::Component
 
         input(type: 'text', value: state.rows, placeholder: 'R').on(:change) do |e|
           mutate.rows e.target.value.to_i
+          rerender
         end
 
         span{'x'}
 
         input(type: 'text', value: state.cols, placeholder: 'C').on(:change) do |e|
           mutate.cols e.target.value.to_i
+          rerender
         end
 
         br
@@ -50,6 +54,7 @@ class SetupForm < Hyperloop::Component
         label{'Amout of Layers'}
         input(type: 'text', value: state.layers, placeholder: 'L').on(:change) do |e|
           mutate.layers e.target.value.to_i
+          rerender
         end
 
         input(type: 'submit', value: 'Change')

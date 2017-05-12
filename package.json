@@ -17,9 +17,19 @@
   },
   "build": {
     "appId": "com.electroboard.app",
+    "mac": {
+      "target": [
+        "pkg"
+      ]
+    },
+    "linux": {
+      "target": [
+        "apk"
+      ]
+    },
     "win": {
       "target": [
-        "zip"
+        "portable"
       ]
     }
   }

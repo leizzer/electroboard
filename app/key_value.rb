@@ -41,6 +41,7 @@ class KeyValuePopup < Hyperloop::Component
 
         input(type: 'text', value: state.val).on :change do |e|
           mutate.val e.target.value
+          rerender
         end
 
         input(type: 'submit', value: 'Acept')
