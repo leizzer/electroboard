@@ -121,7 +121,16 @@ If you ain't sure about the format, my advice is to generate and save a dummy fi
 
 
 ## Screenshot
-![in action](/images/screenshot.png)
+![screenshot](/images/screenshot.png)
+
+![in action1](/images/peek_1.gif)
+
+![in action2](/images/peek_2.gif)
+
+![in action3](/images/peek_3.gif)
+
+
+
 
 ## ToDo
 
