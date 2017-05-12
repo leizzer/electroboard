@@ -5,9 +5,9 @@ A keymap generator for custom/homemade keyboards using [tmk_firmware](https://gi
 ## Builds
 (already packaged, ready to use)
 
-* Windows [download](https://drive.google.com/open?id=0B5iM8TQ7sHptUGdmMEFSdFRha1U)
-* Linux [download x64](https://drive.google.com/open?id=0B5iM8TQ7sHptZHQtYUUwdnJSQjQ) | [download ia32](https://drive.google.com/open?id=0B5iM8TQ7sHptVVF3MjZSWmdBMFE)
-* OS X [download x64](https://drive.google.com/open?id=0B5iM8TQ7sHptUWpHVjB6Y1ppa28) 
+* Windows [download](https://drive.google.com/open?id=0B5iM8TQ7sHptcUhiZGJsM1AxLVE)
+* Linux [download x64](https://drive.google.com/open?id=0B5iM8TQ7sHptYy1RNEZWMER3ek0) | [download ia32](https://drive.google.com/open?id=0B5iM8TQ7sHptY3c3dlVOTG4yaFE)
+* OS X [download x64](https://drive.google.com/open?id=0B5iM8TQ7sHptaUFSZXBra2wxUkU) 
 
 ## How to use
 
