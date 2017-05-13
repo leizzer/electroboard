@@ -33,9 +33,9 @@ If you are using variables to define the layers, please change it back to number
 
 ### Known issue:
 
-This version doesn't handle function definitions and extra code like imports and definitions. So if you are importing an existing keymap to modify it, you should move all your custom code and functions to `keymap_common.h` that is imported by the new generated file.
-
-Any unrecognized code will be loaded as it is, for example `MO(0)`. See the screenshots.
+- Does't generate a good keymap for non-rectangular grids.
+- This version doesn't handle function definitions and extra code like imports and definitions. So if you are importing an existing keymap to modify it, you should move all your custom code and functions to `keymap_common.h` that is imported by the new generated file.
+- Any unrecognized code will be loaded as it is, for example `MO(0)`. See the screenshots.
 
 ## Technology in use
 
