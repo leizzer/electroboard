@@ -1,6 +1,6 @@
 # Electroboard
 
-A keymap generator for custom/homemade keyboards using [tmk_firmware](https://github.com/tmk/tmk_keyboard) keycodes.
+A keymap generator for custom/homemade keyboards using [tmk_firmware](https://github.com/tmk/tmk_keyboard) or [qmk_firmware](https://github.com/qmk/qmk_firmware) keycodes.
 
 ## Builds
 (already packaged, ready to use)
