@@ -22,7 +22,7 @@ For an existing keymap you would probably have to do some modifications to the f
 
 If your keymap has function definitions, imports and more. Move them to a separated file in the same directory and name it `keymap_common.h`. That file will be imported by the new generated code.
 
-Remove spaces and add new lines when needed, ass the [File Formats](https://github.com/leizzer/electroboard#fileformat) section says for the firmware of your choice.
+Remove spaces and add new lines when needed, as the [File Formats](https://github.com/leizzer/electroboard#fileformat) section says for the firmware of your choice.
 
 If you are using variables to define the layers, please change it back to numbers. (e.g.: [0]={...} instead of [\_LW]={...})
 
