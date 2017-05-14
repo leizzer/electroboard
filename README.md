@@ -146,6 +146,7 @@ If you ain't sure about the format, my advice is to generate and save a dummy fi
 
 ## ToDo
 
+* Add shortcuts to QMK dictionary from https://github.com/qmk/qmk_firmware/blob/master/quantum/keymap_common.c
 * Custom CSS from user
 * Support irregular layouts, like a normal keyboard with a long spacebar
 * Manage Functions
