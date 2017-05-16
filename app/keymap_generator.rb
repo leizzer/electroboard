@@ -29,7 +29,7 @@ class TMKGenerator < KeymapGenerator
           row << @dictionary.get_keycode(value)
         end
 
-        row << "\\"
+        row << "\\" unless r == rows - 1 # If it is the last row it doesn't need the \
 
         layer << row.join(', ')
       end
@@ -47,7 +47,7 @@ class TMKGenerator < KeymapGenerator
   end
 
   def wrap_matrix matrix
-   "#include \"keymap_common.h\"\nconst uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {\n#{matrix}\n};"
+   "#include \"keymap_common.h\"\nconst uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {\n#{matrix}\n};"
   end
 
 end
