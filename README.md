@@ -1,6 +1,6 @@
 # Electroboard
 
-A keymap generator for custom/homemade keyboards using [tmk_firmware](https://github.com/tmk/tmk_keyboard) keycodes.
+A keymap generator for custom/homemade keyboards using [tmk_firmware](https://github.com/tmk/tmk_keyboard) or [qmk_firmware](https://github.com/qmk/qmk_firmware) keycodes.
 
 ## Builds
 (already packaged, ready to use)
@@ -22,7 +22,7 @@ For an existing keymap you would probably have to do some modifications to the f
 
 If your keymap has function definitions, imports and more. Move them to a separated file in the same directory and name it `keymap_common.h`. That file will be imported by the new generated code.
 
-Remove spaces and add new lines when needed, ass the [File Formats](https://github.com/leizzer/electroboard#fileformat) section says for the firmware of your choice.
+Remove spaces and add new lines when needed, as the [File Formats](https://github.com/leizzer/electroboard#fileformat) section says for the firmware of your choice.
 
 If you are using variables to define the layers, please change it back to numbers. (e.g.: [0]={...} instead of [\_LW]={...})
 
@@ -33,9 +33,9 @@ If you are using variables to define the layers, please change it back to number
 
 ### Known issue:
 
-This version doesn't handle function definitions and extra code like imports and definitions. So if you are importing an existing keymap to modify it, you should move all your custom code and functions to `keymap_common.h` that is imported by the new generated file.
-
-Any unrecognized code will be loaded as it is, for example `MO(0)`. See the screenshots.
+- Does't generate a good keymap for non-rectangular grids.
+- This version doesn't handle function definitions and extra code like imports and definitions. So if you are importing an existing keymap to modify it, you should move all your custom code and functions to `keymap_common.h` that is imported by the new generated file.
+- Any unrecognized code will be loaded as it is, for example `MO(0)`. See the screenshots.
 
 ## Technology in use
 
@@ -146,5 +146,8 @@ If you ain't sure about the format, my advice is to generate and save a dummy fi
 
 ## ToDo
 
-* Manage Functions
+* Add shortcuts to QMK dictionary from https://github.com/qmk/qmk_firmware/blob/master/quantum/keymap_common.c
 * Custom CSS from user
+* Support irregular layouts, like a normal keyboard with a long spacebar
+* Manage Functions
+
