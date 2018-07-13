@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Electroboard</title>
+
+    <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+    <script src="app/vendor/jquery-2.1.4.min.js"></script>
+    <script src="app/vendor/reactrb-express.js"></script>
+    <script>if (window.module) module = window.module;</script>
+
+    <script src="app/assets/file_manager.js"></script>
+
+    <script type="text/ruby" src="app/dictionary.rb"></script>
+    <script type="text/ruby" src="app/firmware.rb"></script>
+    <script type="text/ruby" src="app/keymap_generator.rb"></script>
+    <script type="text/ruby" src="app/tmk_dictionary.rb"></script>
+    <script type="text/ruby" src="app/qmk_dictionary.rb"></script>
+    <script type="text/ruby" src="app/keymap_loader.rb"></script>
+    <script type="text/ruby" src="app/event_system.rb"></script>
+    <script type="text/ruby" src="app/keyboard.rb"></script>
+    <script type="text/ruby" src="app/layer.rb"></script>
+    <script type="text/ruby" src="app/row.rb"></script>
+    <script type="text/ruby" src="app/keycap.rb"></script>
+    <script type="text/ruby" src="app/key_value.rb"></script>
+    <script type="text/ruby" src="app/setup_form.rb"></script>
+
+
+    <link rel="stylesheet" type="text/css" href="app/assets/style.css">
+
+  </head>
+
+  <body>
+    <div data-reactrb-mount="Keyboard"></div>
+  </body>
+</html>
